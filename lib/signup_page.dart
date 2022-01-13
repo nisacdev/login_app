@@ -1,12 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_app/auth_controller.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
     List images = [
       "g.png",
       "t.png",
@@ -28,7 +31,7 @@ class SignupPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: h * 0.16,
+                  height: h * 0.14,
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.white70,
@@ -59,6 +62,7 @@ class SignupPage extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.2))
                       ]),
                   child: TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                         hintText: "email",
                         prefixIcon: Icon(
@@ -90,6 +94,8 @@ class SignupPage extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.2))
                       ]),
                   child: TextField(
+                    controller: passwordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                         hintText: "password",
                         prefixIcon: Icon(
@@ -126,40 +132,38 @@ class SignupPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: 70,
-          ),
-          Container(
-            width: w * 0.5,
-            height: h * 0.08,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                  image: AssetImage("img/loginbtn.png"), fit: BoxFit.cover),
-            ),
-            child: Center(
-              child: Text(
-                "Sign up",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          
+          GestureDetector(
+            onTap: () {
+              AuthController.instance
+                  .register(emailController.text.trim(), passwordController.text.trim());
+            },
+            child: Container(
+              width: w * 0.5,
+              height: h * 0.08,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                image: DecorationImage(
+                    image: AssetImage("img/loginbtn.png"), fit: BoxFit.cover),
+              ),
+              child: Center(
+                child: Text(
+                  "Sign up",
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 10,),
           RichText(
-            text: TextSpan(
-              recognizer: TapGestureRecognizer()..onTap=()=>Get.back(),
-            text: "Have an account?",
-            style: TextStyle(
-              fontSize: 20,
-              color:Colors.grey[500]
-            )
-          )
-        ),
-          SizedBox(height: w * 0.2),
+              text: TextSpan(
+                  recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
+                  text: "Have an account?",
+                  style: TextStyle(fontSize: 20, color: Colors.grey[500]))),
+          SizedBox(height: w * 0.1),
           RichText(
               text: TextSpan(
             text: "Sign up using one of the following methods",
@@ -177,9 +181,7 @@ class SignupPage extends StatelessWidget {
                   backgroundColor: Colors.grey[500],
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundImage: AssetImage(
-                      "img/"+ images[index]
-                    ),
+                    backgroundImage: AssetImage("img/" + images[index]),
                   ),
                 ),
               );

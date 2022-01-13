@@ -1,16 +1,17 @@
-// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:login_app/auth_controller.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  String email;
+  WelcomePage({Key? key, required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-      return Scaffold(
-        body: Column(
+    return Scaffold(
+      body: Column(
         children: [
           Container(
             width: w,
@@ -32,43 +33,56 @@ class WelcomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 70,),
+          SizedBox(
+            height: 70,
+          ),
           Container(
             width: w,
             margin: const EdgeInsets.only(left: 20),
             child: Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Welcome",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
-                ),),
-                Text("",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey[500],
-                ),),
+                Text(
+                  "Welcome",
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
+                ),
+                Text(
+                  email,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey[500],
+                  ),
+                ),
               ],
             ),
           ),
-          SizedBox(height: 100,),
-          Container(
-            width: w * 0.5,
-            height: h * 0.08,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                  image: AssetImage("img/loginbtn.png"), fit: BoxFit.cover),
-            ),
-            child: Center(
-              child: Text(
-                "Sign out",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          SizedBox(
+            height: 100,
+          ),
+          GestureDetector(
+            onTap: () {
+              AuthController.instance.logOut();
+            },
+            child: Container(
+              width: w * 0.5,
+              height: h * 0.08,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                image: DecorationImage(
+                    image: AssetImage("img/loginbtn.png"), fit: BoxFit.cover),
+              ),
+              child: Center(
+                child: Text(
+                  "Sign out",
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

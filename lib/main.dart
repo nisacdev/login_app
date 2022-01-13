@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import '/login_page.dart';
-import 'welcome_page.dart';
+import '/splash_screen.dart';
+import '/auth_controller.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value)=> Get.put(AuthController()));
   runApp(const MyApp());
 }
 
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:LoginPage(),
+      home: SplashScreen(),
     );
   }
 }
